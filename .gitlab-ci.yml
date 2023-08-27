@@ -1,8 +1,20 @@
 image: hseeberger/scala-sbt:8u222_1.3.5_2.13.1
 
-before_script:
+init:
+  stage: .pre
+
+  script:
   - sbt sbtVersion
 
+build:
+  stage: build
+  script:
+    - echo "COMPILING..."
+    - sbt compile
+    - echo "RUNNING..."
+    - sbt run
+
 test:
+  stage: test
   script:
     - sbt clean test
