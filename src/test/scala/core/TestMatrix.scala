@@ -1,3 +1,5 @@
+import munit.*
+
 class TestMatrix extends munit.FunSuite {
     test("init matrix with working sizess") {
         val matrix: Matrix[Int] = new Matrix[Int](2,2)
@@ -27,7 +29,7 @@ class TestMatrix extends munit.FunSuite {
             val matrix: Matrix[Int] = new Matrix[Int](-1,-1)
             fail("should have thrown exception")
         } catch {
-            assertEquals(true, true)
+            case e: IllegalArgumentException => assertEquals(e.getMessage(), "rows and cols must be positive")
         }
     }
 
