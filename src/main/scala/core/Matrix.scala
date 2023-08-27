@@ -1,3 +1,4 @@
+package core;
 import scala.reflect.ClassTag
 
 class Matrix[@specialized T:ClassTag](val rows: Int, val cols: Int)(implicit num: Numeric[T]) {
@@ -78,10 +79,39 @@ class Matrix[@specialized T:ClassTag](val rows: Int, val cols: Int)(implicit num
         return this
     }
 
+    /**
+      * multiplies this matrix by other matrix (not overriding this matrix)
+      *
+      * @param other matrix to multiply by. cols of this matrix must equal rows of other matrix
+      * @return this matrix with other multiplied
+      */
     def mul(other: Matrix[T]): Matrix[T] = {
-        return this
+        if (cols != other.rows) throw new IllegalArgumentException("cols of this matrix must equal rows of other matrix")
+        val result: Matrix[T] = new Matrix[T](rows, other.cols)
+        for (i <- 0 until rows; j <- 0 until other.cols) {
+            var sum: T = num.zero
+            for (k <- 0 until cols) sum = num.plus(sum, num.times(matrix(i)(k), other.at(k,j)))
+            result.set(i,j,sum)
+        }
+        return result
     }
 
+    def transpose(): Matrix[T] = {
+        val result: Matrix[T] = new Matrix[T](cols, rows)
+        for (i <- 0 until rows; j <- 0 until cols) result.set(j,i, matrix(i)(j))
+        return result
+    }
+
+    def t(): Matrix[T] = transpose()
+
+    override def equals(other: Any): Boolean = {
+        val otherMatrix: Matrix[T] = other.asInstanceOf[Matrix[T]]
+        if (rows != otherMatrix.rows || cols != otherMatrix.cols) return false
+        for (i <- 0 until rows; j <- 0 until cols) {
+            if (matrix(i)(j) != otherMatrix.at(i,j)) return false
+        }
+        return true
+    }
 
     /**
       * returns copy of this matrix
@@ -94,7 +124,11 @@ class Matrix[@specialized T:ClassTag](val rows: Int, val cols: Int)(implicit num
         return copy
     }
 
-    
+    def flatten(): List[T] = {
+        var l: List[T] = List[T]()
+        for (i <- 0 until rows; j <- 0 until cols) l = l ::: List[T](matrix(i)(j))
+        return l
+    }
 
     override def toString(): String = {
         var str: String = ""
@@ -106,5 +140,4 @@ class Matrix[@specialized T:ClassTag](val rows: Int, val cols: Int)(implicit num
         }
         return str
     }   
-
 }
