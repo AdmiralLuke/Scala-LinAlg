@@ -1,7 +1,9 @@
-class Matrix[T](val rows: Int, val cols: Int) {
-    val rows: Int = rows
-    val cols: Int = cols
-    val matrix: Array[Array[T]] = Array.ofDim[Double](rows, cols)
+import scala.reflect.ClassTag
+
+class Matrix[T:ClassTag](val rows: Int, val cols: Int) {
+    if (rows < 0 || cols < 0) throw new IllegalArgumentException("rows and cols must be positive")
+
+    val matrix: Array[Array[T]] = Array.ofDim[T](rows, cols)
 
     /**
     * returns value at given index
@@ -17,7 +19,7 @@ class Matrix[T](val rows: Int, val cols: Int) {
     * initializes all values in matrix to given value
     */
     def init(value: T): Unit = {
-        for (i <- 0 until rows; j <- 0 unitl cols) matrix(i)(j) = value
+        for (i <- 0 until rows; j <- 0 until cols) matrix(i)(j) = value
     }
 
     /**
