@@ -12,7 +12,7 @@ class Substitution {
 
         for (k <- 0 until n) {
             var sum: Double = 0.0
-            for (i <- 0 until k - 1) {
+            for (i <- 0 until k) {
                 sum = sum + (x(i) * A.at(k, i)) 
             }
             val x_k: Double = (b(k) - sum) / A.at(k, k)  
