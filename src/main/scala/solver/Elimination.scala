@@ -41,5 +41,31 @@ class Elimination() {
 
         return (A, b)
     }
+
+    def cholesky_elimination(A: Matrix[Double]): Matrix[Double] = {
+        val (n, m): (Int, Int) = A.getSize()
+        if (n != m) throw new IllegalArgumentException("matrix must be square")
+        if (!A.isSymmetric()) throw new IllegalArgumentException("matrix must be symmetric")
+
+        val L: Matrix[Double] = new Matrix[Double](n,n)
+        for (i <- 0 until n) {
+            for (j <- 0 until i + 1) {
+                if (i == j) {
+                    var sum: Double = 0.0
+                    for (k <- 0 until j) {
+                        sum = sum + Math.pow(L.at(j,k), 2)
+                    }
+                    L.set(j,j, Math.sqrt(A.at(j,j) - sum))
+                } else {
+                    var sum: Double = 0.0
+                    for (k <- 0 until j) {
+                        sum = sum + (L.at(i,k) * L.at(j,k))
+                    }
+                    L.set(i,j, (A.at(i,j) - sum) / L.at(j,j))
+                }
+            }
+        }
+        return L
+    }
 }
 

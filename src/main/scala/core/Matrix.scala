@@ -113,6 +113,10 @@ class Matrix[@specialized T:ClassTag](val rows: Int, val cols: Int)(implicit num
         return true
     }
 
+    def isSymmetric(): Boolean = {
+        return this.equals(this.transpose())
+    }
+
     /**
       * returns copy of this matrix
       *

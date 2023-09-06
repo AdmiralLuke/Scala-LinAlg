@@ -34,5 +34,34 @@ class TestElimination extends munit.FunSuite {
 
 
     }
+
+    test("cholesky elimination") {
+        val A: Matrix[Double] = new Matrix(3, 3)
+        A.init(List[Double](4, 2, 0, 2, 5, 2, 0, 2, 5))
+        val result: Matrix[Double] = Elimination().cholesky_elimination(A)
+
+        /*
+        [4, 2, 0]
+        [2, 5, 2]
+        [0, 2, 5]
+
+
+        [2, 0, 0]
+        [1, 2, 0]
+        [0, 1, 2]
+        */
+
+        assertEquals(result.at(0,0), 2.0)
+        assertEquals(result.at(0,1), 0.0)
+        assertEquals(result.at(0,2), 0.0)
+        assertEquals(result.at(1,0), 1.0)
+        assertEquals(result.at(1,1), 2.0)
+        assertEquals(result.at(1,2), 0.0)
+        assertEquals(result.at(2,0), 0.0)
+        assertEquals(result.at(2,1), 1.0)
+        assertEquals(result.at(2,2), 2.0)
+        
+    
+    }
   
 }
