@@ -1,8 +1,24 @@
-## sbt project compiled with Scala 3
+## Scala LinearAlgebra Library
 
-### Usage
+Core:
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+| List Extension | Matrix |
+| --- | --- |
+| sumOfElements() | ctor(), cpyctor() , ... |
+| ToDo | arithmetic operators (add, sub, mul, transpose) |
+| ToDo | flatten, equals, symmetric |
+| ... | ... |
 
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+Solver:
+
+| Elimination | Solver | Substitution |
+| --- | --- | --- |
+| Gaussian Elimination | - | Forward & Backward Substitution |
+| Cholesky Elimination | Cholesky Solver | - |
+| ... | ... | ... |
+
+ToDo:
+- PCA, Eigenvalues, Eigenvectors
+- Fourier Transformation
+- LR-Elimination
+- ...
